@@ -9,8 +9,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/:url', function(req, res){
-    phantomController.renderPdf(res, {url: "http://localhost/index/populated/" + req.params.url});
-    res.sendStatus(200);
+    phantomController.renderPdf(res, {url: "http://localhost/index/populated/" + req.params.url}, function(path){
+    	res.status(201).json({path: path});
+    });
 });
 
 var server = app.listen(3002, function () {

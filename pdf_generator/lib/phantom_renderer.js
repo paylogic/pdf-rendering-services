@@ -27,6 +27,7 @@ exports.renderPdf = function(res, options, cb) {
                     page.close();
                     fs.createReadStream("./tmp/" + filename).pipe(request.put("http://localhost/index/populated/" + filename));
                     fs.unlinkSync("./tmp/" + filename);
+                    cb("http://localhost/index/populated/" + filename);
                 });
             }); 
         });
