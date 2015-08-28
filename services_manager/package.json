@@ -1,0 +1,16 @@
+{
+  "name": "services_manager",
+  "version": "0.0.1",
+  "private": true,
+  "main": "app.js",
+  "dependencies": {
+    "http-proxy": "^1.11.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luuk Blom",
+  "license": "ISC",
+  "description": "Basic proxy for accessing different services"
+}
