@@ -8,8 +8,9 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/:url', function(req, res){
-    phantomController.renderPdf(res, {url: "http://localhost/index/populated/" + req.params.url}, function(path){
+app.get('*', function(req, res){
+	console.log(req.url);
+    phantomController.renderPdf(res, {url: "http://localhost/" + req.url}, function(path){
     	res.status(201).json({path: path});
     });
 });
@@ -17,5 +18,5 @@ app.get('/:url', function(req, res){
 var server = app.listen(3002, function () {
     var host = server.address().address;
     var port = server.address().port;
-    console.log("Example app listening at http://%s:%s", host, port);
+    console.log("PDF Generator listening at http://%s:%s", host, port);
 })

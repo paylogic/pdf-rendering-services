@@ -37,7 +37,7 @@ router.post('/:templateName/populate',bodyParser.json(), function(req, res) {
 				body: html,
 			}
 			request.put(opts, function(error, response, body){
-				res.sendStatus(201);
+				request.get("http://localhost:3000/pdf_generator/" + templateName + "/populated/" + filename + ".html").pipe(res);
 			});
 		}
 	});
