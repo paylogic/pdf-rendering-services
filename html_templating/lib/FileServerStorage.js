@@ -1,12 +1,13 @@
 var fs = require('fs')
 var request = require('request');
+var path = require('path');
 
 
 function FileServerStorage(){};
 
 FileServerStorage.prototype._handleFile = function _handleFile (req, file, cb) {
 	if(file.fieldname == "background" || file.fieldname == "template"){
-		file.path = 'http://localhost/' + req.params.templateName + '/' + file.fieldname;
+		file.path = 'http://localhost/' + req.params.templateName + '/' + file.fieldname + path.extname(file.originalname);
 	}else{
 		file.path = 'http://localhost/' + req.params.templateName + '/' + file.fieldname + '/' + file.originalname;
 	}
