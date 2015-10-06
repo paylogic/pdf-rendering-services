@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('*', function(req, res){
-	console.log(req.url);
+	console.log(req.params);
     phantomController.renderPdf(res, {url: "http://localhost/" + req.url}, function(path){
     	res.status(201).json({path: path});
     });

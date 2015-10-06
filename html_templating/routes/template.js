@@ -26,7 +26,7 @@ var bodyParser = require('body-parser');
 
 router.post('/:templateName/populate',bodyParser.json(), function(req, res) {
 	var templateName = req.params.templateName
-	request.get("http://localhost/" + templateName + "/template", function(error, response, body){
+	request.get("http://localhost/" + templateName + "/template.jade", function(error, response, body){
 		if(response.statusCode != 200){
 			res.sendStatus(response.statusCode);
 		}else{

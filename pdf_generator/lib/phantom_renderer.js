@@ -2,6 +2,7 @@ var phantom = require('phantom');
 var request = require('request');
 var crypto = require('crypto');
 var fs = require('fs');
+var child_process = require('child_process');
 
 var session;
 
@@ -25,9 +26,14 @@ exports.renderPdf = function(res, options, cb) {
                 var filename = crypto.randomBytes(12).toString('hex') + '.pdf';
                 page.render("./tmp/" + filename, function(){
                     page.close();
-                    fs.createReadStream("./tmp/" + filename).pipe(request.put("http://localhost/index/populated/" + filename));
-                    fs.unlinkSync("./tmp/" + filename);
-                    cb("http://localhost/index/populated/" + filename);
+                    request.get("http://localhost/index/background.pdf").pipe(fs.createWriteStream('./tmp/background.pdf').on('finish', function(){
+                        child_process.execSync("pdftk ./tmp/background.pdf background ./tmp/" + filename + " output ./tmp/output.pdf");
+                        fs.createReadStream("./tmp/output.pdf").pipe(request.put("http://localhost/index/populated/" + filename));
+                        fs.unlinkSync("./tmp/" + filename);
+                        fs.unlinkSync("./tmp/output.pdf");
+                        fs.unlinkSync("./tmp/background.pdf");
+                        cb("http://localhost/index/populated/" + filename);
+                    }));
                 });
             }); 
         });
